@@ -1,0 +1,193 @@
+/* ==========================================================
+   NavBar Clone
+   Layout uses only flexbox + the position property.
+   No margin is used anywhere: spacing comes from padding and gap.
+   ========================================================== */
+
+:root {
+  --page-bg: #d5e2ec;
+  --bar-bg: #23252b;
+  --text: #f3f5f7;
+  --text-soft: #c9ced6;
+  --accent: #0587a8;
+  --accent-hover: #079dc2;
+  --bar-height: 64px;
+  --side-space: 92px;
+}
+
+/* The stage is pinned to the viewport with position, so the
+   browser's default body spacing never shows up. */
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 40px;
+  box-sizing: border-box;
+  background: var(--page-bg);
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+}
+
+/* ---------- Bar ---------- */
+.navbar {
+  display: flex;
+  align-items: center;
+  height: var(--bar-height);
+  padding: 0 var(--side-space);
+  background: var(--bar-bg);
+  box-shadow: 0 14px 22px -8px rgba(30, 60, 90, 0.35),
+              0 2px 4px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+}
+
+.navbar-inner {
+  position: relative; /* anchor for the centered link list */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  font-family: "Rubik", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.logo:hover {
+  color: var(--accent-hover);
+}
+
+/* ---------- Links ---------- */
+.group {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  list-style: none;
+  padding: 0;
+}
+
+/* Dead-center the link list using position */
+.links-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.links a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* Animated underline, placed with position */
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-hover);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.links a:hover,
+.links a:focus-visible {
+  color: #ffffff;
+}
+
+.links a:hover::after,
+.links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Contact button ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 21px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(5, 135, 168, 0.35);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(5, 135, 168, 0.45);
+}
+
+/* ---------- Keyboard focus ---------- */
+.logo:focus-visible,
+.btn:focus-visible,
+.links a:focus-visible {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  :root { --side-space: 36px; }
+  .stage { padding: 0 16px; }
+  .group, .links { gap: 22px; }
+}
+
+@media (max-width: 680px) {
+  /* Stop centering with position; let flex space the three items */
+  .links-center {
+    position: static;
+    transform: none;
+  }
+  .navbar-inner { gap: 12px; }
+}
+
+@media (max-width: 520px) {
+  :root { --side-space: 16px; }
+  .stage { padding: 0 8px; }
+  .group, .links { gap: 14px; }
+  .logo { font-size: 15px; }
+  .links a, .btn { font-size: 12px; }
+  .btn { padding: 7px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .links a::after,
+  .links a,
+  .btn,
+  .logo { transition: none; }
+}
